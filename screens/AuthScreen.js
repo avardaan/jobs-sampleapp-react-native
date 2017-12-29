@@ -11,7 +11,7 @@ class AuthScreen extends Component {
   componentDidMount() {
     // call facebook login flow from actions
     this.props.facebookLogin()
-    this.onAuthComplete
+    this.onAuthComplete(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
