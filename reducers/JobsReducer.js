@@ -1,6 +1,6 @@
 import {
   FETCH_JOBS,
-} from '../action/types'
+} from '../actions/types'
 
 export default (state={}, action) => {
   switch (action.type) {
