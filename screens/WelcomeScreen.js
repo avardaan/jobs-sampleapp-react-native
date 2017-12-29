@@ -22,6 +22,10 @@ const SLIDES_DATA = [
 ]
 
 class WelcomeScreen extends Component {
+  // comp level state to see if token exists or not
+  state = {
+    token: null
+  }
 
   onSlidesComplete = () => {
     // navigation passed to component
