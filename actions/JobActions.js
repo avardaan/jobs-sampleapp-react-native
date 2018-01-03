@@ -5,6 +5,7 @@ import { publisherID } from '../utilities/indeed'
 
 import {
   FETCH_JOBS,
+  LIKE_JOB,
 } from './types'
 
 // root url indeed API
@@ -26,7 +27,7 @@ const buildJobsUrl = (zip) => {
 
 }
 
-export const fetchJobs = (region) => async (dispatch) => {
+export const fetchJobs = (region, navigationCallback) => async (dispatch) => {
   // convert latlng to zipcode
   try {
     let zip = await reverseGeocode(region)
@@ -35,12 +36,17 @@ export const fetchJobs = (region) => async (dispatch) => {
     // make API call
     let { data } = await axios.get(url)
     dispatch({ type: FETCH_JOBS, payload: data })
-    console.log(data)
+    // execute nav command passed in from MapScreen
+    navigationCallback()
   } catch (err) {
     console.error(err)
   }
-  // hit indeed jobs API
+}
 
-  axios.get()
-
+export const likeJob = (job) => {
+  // synchronous action, so don't need to return dispatch function
+  return {
+    type: LIKE_JOB,
+    payload: job,
+  }
 }

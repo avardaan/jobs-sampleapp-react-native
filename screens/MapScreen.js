@@ -27,7 +27,8 @@ class MapScreen extends Component {
 
   // on search press
   onButtonPress = () => {
-    this.props.fetchJobs(this.state.region)
+    // pass in function as second parameter to action
+    this.props.fetchJobs(this.state.region, () => this.props.navigation.navigate('deck'))
   }
 
   render() {
