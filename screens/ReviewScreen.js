@@ -3,8 +3,12 @@ import {
   View,
   Text,
   Platform,
+  FlatList,
+  Linking
 } from 'react-native';
-import { Button } from 'react-native-elements'
+import { connect } from 'react-redux'
+import { Card, Button } from 'react-native-elements'
+import { MapView } from 'expo'
 
 class ReviewScreen extends Component {
   // nav options
@@ -24,15 +28,65 @@ class ReviewScreen extends Component {
     }
   })
 
+  // render individual item of flatlist
+  renderLikedJobs(job) {
+
+    const initialRegion = {
+      longitude: job.longitude,
+      latitude: job.latitude,
+      latitudeDelta: 0.045,
+      longitudeDelta: 0.02,
+    }
+
+    return (
+      <Card title={job.jobtitle}>
+        <View style={{ height: 200 }}>
+          <MapView
+            style={{ flex:1 }}
+            cacheEnabled={true}
+            scrollEnabled={false}
+            initialRegion={initialRegion}
+          />
+          <View style={styles.detailWrapper}>
+            <Text style={styles.italics}>{job.company}</Text>
+            <Text style={styles.italics}>{job.formattedRelativeTime}</Text>
+          </View>
+          <Button
+            title="Apply Now!"
+            backgroundColor="#03a9f4"
+            onPress={() => Linking.openURL(job.url)}
+          />
+        </View>
+      </Card>
+    )
+  }
+
   render() {
     return (
-      <View>
-        <Text>ReviewScreen</Text>
-        <Text>ReviewScreen</Text>
-        <Text>ReviewScreen</Text>
-      </View>
+      <FlatList
+        data={this.props.likedJobs}
+        renderItem={({ item }) => this.renderLikedJobs(item)}
+        keyExtractor={(item) => item.jobkey}
+      />
     );
   }
 }
 
-export default ReviewScreen;
+const styles = {
+  detailWrapper: {
+    flexDirection: 'row',
+    marginVertical: 10,
+    justifyContent: 'space-around'
+  },
+  italics: {
+    fontStyle: 'italic'
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    likedJobs: state.likedJobs
+  }
+}
+
+export default connect(mapStateToProps)(ReviewScreen);
