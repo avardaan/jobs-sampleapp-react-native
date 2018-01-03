@@ -1,9 +1,11 @@
-import Expo from 'expo'
+import Expo, { Notifications } from 'expo'
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation'
 
 import store from './store'
+
+import registerForNotifications from './services/PushNotifications'
 
 import AuthScreen from './screens/AuthScreen'
 import WelcomeScreen from './screens/WelcomeScreen'
@@ -15,6 +17,20 @@ import ReviewScreen from './screens/ReviewScreen'
 import { Provider } from 'react-redux'
 
 export default class App extends React.Component {
+  componentDidMount() {
+    // ask for push notif permission
+    registerForNotifications()
+    // notification listener
+    Notifications.addListener((notification) => {
+      // advanced destructuring
+      const { data: { text }, origin } = notification
+      // check origin of notification
+      if (origin === 'received' && text) {
+        alert(text)
+      }
+    })
+  }
+
   render() {
     // navigation setup
     const MainNavigator = TabNavigator({

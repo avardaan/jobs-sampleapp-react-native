@@ -2,7 +2,6 @@ import {
   LIKE_JOB,
   CLEAR_LIKED_JOBS,
 } from '../actions/types'
-
 import _ from 'lodash'
 
 export default (state=[], action) => {
