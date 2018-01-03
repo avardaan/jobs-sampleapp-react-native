@@ -6,6 +6,7 @@ import { publisherID } from '../utilities/indeed'
 import {
   FETCH_JOBS,
   LIKE_JOB,
+  CLEAR_LIKED_JOBS
 } from './types'
 
 // root url indeed API
@@ -39,7 +40,7 @@ export const fetchJobs = (region, navigationCallback) => async (dispatch) => {
     // execute nav command passed in from MapScreen
     navigationCallback()
   } catch (err) {
-    console.error(err)
+    alert(err)
   }
 }
 
@@ -48,5 +49,13 @@ export const likeJob = (job) => {
   return {
     type: LIKE_JOB,
     payload: job,
+  }
+}
+
+export const clearLikedJobs = (navCallback) => {
+  // go back to previous screen
+  navCallback()
+  return {
+    type: CLEAR_LIKED_JOBS,
   }
 }

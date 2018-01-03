@@ -7,7 +7,7 @@ import {
   Linking
 } from 'react-native';
 import { connect } from 'react-redux'
-import { Card, Button } from 'react-native-elements'
+import { Card, Button, Icon } from 'react-native-elements'
 import { MapView } from 'expo'
 
 class ReviewScreen extends Component {
@@ -15,6 +15,14 @@ class ReviewScreen extends Component {
   // react-navigation SUCKS, will have to refer to docs a lot, not intuitive at all
   static navigationOptions = ({ navigation }) => ({
     title: 'Review Jobs',
+    tabBarLabel: 'Liked',
+    tabBarIcon: ({ tintColor }) => (
+      <Icon
+        name="favorite"
+        size={30}
+        color={tintColor}
+      />
+    ),
     headerRight: (
       <Button
         title="Settings"

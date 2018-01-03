@@ -32,6 +32,13 @@ export default class App extends React.Component {
 
             })
           }
+        }, {
+          // map, deck, review tab nav config
+          tabBarOptions: {
+            labelStyle: { fontSize: 12 }
+          },
+          tabBarPosition: 'bottom',
+          swipeEnabled: false
         })
       }
     }, {
